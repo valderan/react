@@ -18,7 +18,6 @@ console.log('employersNames: ', employersNames);
 employersNames = employersNames.map(name => name.toLocaleLowerCase().trim());
 console.log('employersNames: ', employersNames);
 
-
 const sponsors = {
     cash: [40000, 5000, 30400, 12000],
     eu: ['SRL', 'PLO', 'J&K'],
@@ -44,7 +43,7 @@ const calcCash = (everyCash, total = 0) => {
     return total;
 };
 
-let money = calcCash(sponsors.cash);
+const money = calcCash(sponsors.cash);
 console.log('money: ', money);
 
 // function makeBusiness(owner, director, cash, emp) {
