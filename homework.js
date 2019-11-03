@@ -64,12 +64,12 @@ const makeBusiness = ({
     cash = 0,
     emp = []
 } = {}) => {
-    //const allSponsors = sponsors.eu.concat(sponsors.rus, 'unexpected sponsor'); 
-    const allSponsors = [sponsors.eu, ...sponsors.rus, 'unexpected sponsor']; 
+    const allSponsors = [...sponsors.eu, ...sponsors.rus, 'unexpected sponsor'],
+        [riskSponsor] = allSponsors;
     console.log(`We have a business. Owner: ${owner}, director: ${director}. Our budget: ${cash}. And our employers: ${emp}`);
     console.log('And we have a sponsors: ');
     console.log(...allSponsors);
-    console.log('Note. Be careful with ' + sponsors.eu[0] + ". It's a huge risk.");
+    console.log(`Note. Be careful with ${riskSponsor}. It's a huge risk.`);
 }
 
 makeBusiness({
