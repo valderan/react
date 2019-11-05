@@ -22,7 +22,7 @@ const PostListItem = () => {
                     <i className="fa fa-trash-o"></i>
                 </button>
                 <i className="fa fa-heart"></i>
-                <span class="badge badge-secondary">{dateCreate}</span>
+                <span className="badge badge-secondary">{dateCreate}</span>
             </div>
         </li>
     )
