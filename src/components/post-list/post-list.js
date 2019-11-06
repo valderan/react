@@ -5,7 +5,9 @@ import './post-list.css';
 
 
 const PostList = ({ posts }) => {
-    const elements = posts.filter(item => typeof(item) === 'object').map(item => {
+    const elements = posts.filter(item => typeof(item) === 'object')
+        .filter(item => item.label.length > 0)
+        .map(item => {
         const {id, ...itemProps} = item;
         return (
             <li key={id} className="list-group-item">
