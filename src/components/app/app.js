@@ -14,7 +14,7 @@ const App = () => {
         {label: 'Going to learnb React', important: true, id: 'qewrq'},
         {label: 'That`s so ggod', important: false, id: 'qedfq'},
         {label: 'I need a break...', important: false, id: 'werfq'},
-        {label: '', important: false, id: 'wdwerfq'},
+        {label: ' ', important: false, id: 'wdwerfq'},
         1111,   // для теста
         2222    // для теста
     ];
