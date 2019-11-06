@@ -5,7 +5,8 @@ import './post-list.css';
 
 
 const PostList = ({ posts }) => {
-    const elements = posts.filter(item => typeof(item) === 'object')
+    const elements = posts.filter(item => typeof(item) === 'object' )
+        .filter(item => item.hasOwnProperty('label') && item.hasOwnProperty('id') && item.hasOwnProperty('important'))
         .filter(item => item.label.replace(/\s+/g, '').length > 0)
         .map(item => {
         const {id, ...itemProps} = item;
