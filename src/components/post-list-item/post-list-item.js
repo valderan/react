@@ -13,7 +13,8 @@ export default class PostListItem extends React.Component {
             important: props.important,
             label: props.label,
             like: false,
-            change: false
+            change: false,
+            onDelete: props.onDelete
         };
     }
     
@@ -40,9 +41,9 @@ export default class PostListItem extends React.Component {
      onChangeBtn = () => {
         this.setState({ change: true })
      }
-
+z
     render() {
-        const { important, label, like, change } = this.state,
+        const { important, label, like, change, onDelete } = this.state,
             changeBtn = <button type="button" className="btn btn-outline-success" onClick={this.onChangeBtn}>изменить</button>;
             
         let classNames = 'app-list-item d-flex justify-content-between';
@@ -79,8 +80,11 @@ export default class PostListItem extends React.Component {
                             className="btn-star btn-sm">
                         <i className="fa fa-star"></i>
                     </button>
-                    <button type="button" className="btn-trash btn-sm">
-                        <i className="fa fa-trash-o"></i>
+                    <button 
+                        type="button" 
+                        className="btn-trash btn-sm"
+                        onClick={onDelete}>
+                            <i className="fa fa-trash-o"></i>
                     </button>
                     <i className="fa fa-heart"></i>
                     <span className="badge badge-secondary">{dateCreate}</span>
