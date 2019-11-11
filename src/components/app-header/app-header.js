@@ -19,11 +19,19 @@ const Header = styled.div`
     }
 `;
 
-const AppHeader = () => {
+const AppHeader = ({liked, allPosts}) => {
+    
+    let strRecords = 'запись';
+    if (allPosts > 1 && allPosts < 5) {
+        strRecords = 'записи'
+    } else if(allPosts >= 5) {
+        strRecords = 'записей'
+    }
+
     return (
         <Header>
             <h1>Vladimir Kundryukov</h1>
-            <h2>5 записей, из них понравилось 0</h2>
+            <h2>{allPosts} {strRecords}, из них понравилось {liked}</h2>
         </Header>
     )
 }

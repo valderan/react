@@ -24,17 +24,14 @@ export default class App extends Component {
         super(props);
         this.state = {
             data : [
-                {label: 'Going to learnb React', important: true, id: 'a96e41ab-4648-4a59-adee-5c5f891a94b1'},
-                {label: 'That`s so ggod', important: false, id: '260773d8-d811-4ac1-b50b-f5404c3525fd'},
-                {label: 'I need a break...', important: false, id: '2c940d3e-bcaf-4d2d-9703-ca6742c8901c'},
-                {label: ' ', important: false, id: 'werfd2q'},
-                {label: '', important: false, id: 'werd2edfq'},
-                {},
-                1111,   // для теста
-                2222    // для теста
+                {label: 'Going to learnb React', important: true, like: false, id: 'a96e41ab-4648-4a59-adee-5c5f891a94b1'},
+                {label: 'That`s so ggod', important: false, like: false, id: '260773d8-d811-4ac1-b50b-f5404c3525fd'},
+                {label: 'I need a break...', important: false, like: false, id: '2c940d3e-bcaf-4d2d-9703-ca6742c8901c'}
             ], 
             deleteStatus: false,
-            deleteId: ''
+            deleteId: '',
+            term: '', 
+            filter: 'all'
         }
     }
 
@@ -63,7 +60,6 @@ export default class App extends Component {
             important: false,
             id: uid()
         };
-        console.log('newItem: ', newItem);
         this.setState(({data}) => {
             const newArr = [...data, newItem]
             return {
@@ -72,20 +68,86 @@ export default class App extends Component {
         })
     }
 
+    changePreferences = (name, id) => {
+        this.setState(({data}) => {
+            const index = data.findIndex( elem => elem.id === id);
+            
+            const old = data[index];
+            const newItem = {...old};
+            newItem[name] = !old[name]; 
+            const newArr = [...data.slice(0,index), newItem, ...data.slice(index+1)];
+ 
+            return {
+                data: newArr
+            }
+        })
+
+    }
+
+    // важность поста
+    onToggleImportant = (id) => {
+        this.changePreferences('important', id);
+    }
+
+    // like поста 
+    onToggleLiked = (id) => {
+        this.changePreferences('like', id);
+    } 
+
+    // поиск
+    searchPost = (items, term) => {
+        if (term.length === 0) {
+            return items
+        }
+
+        return items.filter( (item) => {
+            return item.label.toLowerCase().indexOf(term.toLowerCase()) > -1
+        })
+    } 
+
+    // апдейт поиска 
+    onUpdateSearch = (term) => {
+        this.setState({term});
+    }
+
+    // фильтр постов
+    filterPost = (items, filter) => {
+        // фильтр по Like
+        if (filter === 'like') {
+            return items.filter(item => item.like)
+        } else {
+            return items;
+        }
+    }
+
+    onFilterSelect = (filter) => {
+        this.setState({filter});
+    }
+
     render() {
 
-        const { deleteStatus, deleteId } = this.state;
-        
+        const { data, term, filter, deleteStatus, deleteId } = this.state,
+            liked = data.filter(item => item.like).length,
+            allPosts = data.length,
+            visiblePosts = this.filterPost(this.searchPost(data, term), filter); // фильтр(поиск)
+
         return (
             <AppBlock>
-                <AppHeader/>
+                <AppHeader 
+                    liked={liked}
+                    allPosts={allPosts}/>
                 <div className="search-panel d-flex">
-                    <SearchPanel/>
-                    <PostStatusFilter/>
+                    <SearchPanel 
+                        onUpdateSearch={this.onUpdateSearch}/>
+                    <PostStatusFilter 
+                        filter={filter}
+                        onFilterSelect={this.onFilterSelect}/>
                 </div>
                 <PostList 
-                    posts={this.state.data}
-                    onDelete={this.delete}/>
+                    posts={visiblePosts}
+                    onDelete={this.delete}
+                    onToggleImportant={this.onToggleImportant}
+                    onToggleLiked={this.onToggleLiked}/>
                 <PostAddForm
                     onAdd={this.addItem}/>
                 

@@ -9,27 +9,19 @@ import ChangeItem from '../change-item';
 export default class PostListItem extends React.Component {
     constructor(props) {
         super(props);
+        // this.state = {
+        //     important: props.important,
+        //     label: props.label,
+        //     like: false,
+        //     change: false,
+        //     onDelete: props.onDelete
+        // };
+
         this.state = {
-            important: props.important,
-            label: props.label,
-            like: false,
-            change: false,
-            onDelete: props.onDelete
+            change: false
         };
     }
-    
-    onImportant = () => {
-        this.setState(({important}) => ({
-            important: !important
-        }))
-    }
-    
-    onLike = () => {
-        this.setState(({like}) => ({
-            like: !like
-        }))
-    }
-    
+
      onChange = (changeLabel, changeStatus = true) => {  
         if (changeStatus) {
             this.setState({ label: changeLabel, change:false })
@@ -43,7 +35,9 @@ export default class PostListItem extends React.Component {
      }
 z
     render() {
-        const { important, label, like, change, onDelete } = this.state,
+        
+        const { important, like, label, onDelete , onToggleImportant, onToggleLiked } = this.props,
+            { change } = this.state,
             changeBtn = <button type="button" className="btn btn-outline-success" onClick={this.onChangeBtn}>изменить</button>;
             
         let classNames = 'app-list-item d-flex justify-content-between';
@@ -70,12 +64,12 @@ z
             <div className={classNames}>
                 <span 
                     className="app-list-item-label"
-                    onClick={this.onLike}>
+                    onClick={onToggleLiked}>
                     {label}
                 </span>
                 <div className="d-flex justify-content-center align-items-center">
                     <button 
-                            onClick={this.onImportant}
+                            onClick={onToggleImportant}
                             type="button" 
                             className="btn-star btn-sm">
                         <i className="fa fa-star"></i>

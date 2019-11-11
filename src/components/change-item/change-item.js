@@ -11,7 +11,6 @@ export default class ChangeItem extends React.Component {
         }    
     }
 
-    
     close = () => {
         this.props.onChange('', false);
     }
@@ -39,7 +38,7 @@ export default class ChangeItem extends React.Component {
                             <span aria-hidden="true">&times;</span>
                         </button>
                 </div>
-                <input   onChange={(event)=>this.inputChangedHandler(event)} 
+                <input  onChange={(event)=>this.inputChangedHandler(event)} 
                         className="form-control form-control-lg" 
                         type="text" 
                         defaultValue={label}/>
