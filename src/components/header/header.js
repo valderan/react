@@ -1,51 +1,34 @@
 import React from 'react';
-import styled from 'styled-components';
 
-const HeaderBlock = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 80px;
-`;
+import {
+    Navbar,
+    NavbarBrand,
+    Nav,
+    NavItem,
+    NavLink} from 'reactstrap';
 
-const HeaderTitle = styled.h3`
-    font-size: 24px;
-    color: #fff;
-    margin: 0;
-`;
-
-const HeaderLinks = styled.ul`
-    display: flex;
-    margin: 0;
-    align-items: center;
-    color: #fff;
-    list-style-type: none;
-    li {
-        margin-right: 20px;
-        font-size: 18px;
-    }
-`;
+import './header.css';
 
 const Header = () => {
     return (
-        <HeaderBlock>
-            <HeaderTitle>
-                <a href="#">
-                Game of Thrones DB
-                </a>
-            </HeaderTitle>
-            <HeaderLinks>
-                <li>
-                    <a href="#">Characters</a>
-                </li>
-                <li>
-                    <a href="#">Houses</a>
-                </li>
-                <li>
-                    <a href="#">Books</a>   
-                </li>
-            </HeaderLinks>
-        </HeaderBlock>
+     
+        <Navbar expand="md" className="headerBlock">
+            <div className="headerTitle">
+                <NavbarBrand href="#">Game of Thrones DB</NavbarBrand>
+            </div>
+            <Nav className="ml-auto headerLinks" navbar>
+                <NavItem>
+                    <NavLink href="#">Characters</NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink href="#">Houses</NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink href="#">Books</NavLink>
+                </NavItem>
+            </Nav>
+        </Navbar>
+       
     );
 };
 
