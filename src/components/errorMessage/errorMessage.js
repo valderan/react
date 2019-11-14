@@ -59,7 +59,6 @@ export default class ErrorMessage extends React.Component  {
 
             default:
                 break;
-
         }
 
         return (

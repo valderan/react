@@ -45,13 +45,18 @@ export default class GotService {
         return this._transformHouse(res);
     }
 
+    static _valid = (str) => {
+        return str.trim(' ').length !== 0 ? str : 'no data';
+    }
+
     _transformCharacter(char) {
         return {
-            name: char.name,
-            gender: char.gender,
-            born: char.born,
-            died: char.died,
-            culture: char.culture
+            id: char.url.replace(/https:\/\/www.anapioficeandfire.com\/api\/characters\//,''),
+            name: GotService._valid(char.name),
+            gender: GotService._valid(char.gender),
+            born: GotService._valid(char.born),
+            died: GotService._valid(char.died),
+            culture: GotService._valid(char.culture)
         }
     }
 
