@@ -10,34 +10,67 @@ export default class GotService {
     }
 
     // получение всех героев
-    getAllCharacters() {
-        return this.getResource('/characters?page=5&pageSize=10');
+    async getAllCharacters() {
+        const res =  await this.getResource('/characters?page=5&pageSize=10');
+        return res.map(this._transformCharacter)
     }
 
     // получение героя по id
-    getCharacter(id) {
-        return this.getResource(`/characters/${id}`);
+    async getCharacter(id) {
+        const res = await this.getResource(`/characters/${id}`);
+        return this._transformCharacter(res)
     }
 
     // получение всех книг
-    getBooks() {
-        return this.getResource(`/books`);
+    async getBooks() {
+        const res = await this.getResource(`/books`);
+        return res.map(this._transformBook);
     }
 
     // получение книги по номеру
-    getBook(id) {
-        return this.getResource(`/books/${id}`);
+    async getBook(id) {
+        const res = await this.getResource(`/books/${id}`);
+        return this._transformBook(res);
     }
 
     // получение списка всех домов
-    getAllHouses() {
-        return this.getResource(`/houses`);
+    async getAllHouses() {
+        const res = await this.getResource(`/houses`);
+        return res.map(this._transformHouse);
     }
 
     // получение дома по номеру
-    getHouse(id) {
-        return this.getResource(`/houses/${id}`);
+    async getHouse(id) {
+        const res = await this.getResource(`/houses/${id}`);
+        return this._transformHouse(res);
     }
 
+    _transformCharacter(char) {
+        return {
+            name: char.name,
+            gender: char.gender,
+            born: char.born,
+            died: char.died,
+            culture: char.culture
+        }
+    }
 
+    _transformHouse(house) {
+        return {
+            name: house.name,
+            region: house.region,
+            words: house.words,
+            overlord: house.overlord,
+            ancestralWeapons: house.ancestralWeapons
+        }
+    }
+
+    _transformBook(book) {
+        return {
+            name: book.name,
+            number: book.number,
+            publisher: book.publisher,
+            released: book.released 
+        }
+    }
 }
