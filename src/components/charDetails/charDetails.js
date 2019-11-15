@@ -37,6 +37,10 @@ export default class CharDetails extends Component {
             .then( char => {
                 this.setState({char})
             })
+            .catch(error => {
+                console.error(error);
+                this.setState({error: true})
+            })
         //this.foo.bar=0;   // error
     }
 

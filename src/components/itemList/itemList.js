@@ -21,6 +21,10 @@ export default class ItemList extends Component {
             .then( charList => {
                 this.setState({charList})
             })
+            .catch(error => {
+                console.error(error);
+                this.setState({error: true})
+            })
     }
 
     renderItems = (arr) => {
