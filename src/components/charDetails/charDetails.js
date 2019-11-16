@@ -4,6 +4,20 @@ import gotService from '../../services/gotService';
 import { ListGroup, ListGroupItem } from 'reactstrap';
 import Spiner from '../spiner/spiner';
 import ErrorMessage from '../errorMessage/errorMessage';
+
+const Field = ({ char, field, label }) =>  {
+    return (
+        <ListGroupItem className="d-flex justify-content-between">
+            <span className="term">{label}</span>
+            <span>{char[field]}</span>
+        </ListGroupItem> 
+    )
+}
+
+export {
+    Field
+};
+
 export default class CharDetails extends Component {
 
     gotService = new gotService();
@@ -41,7 +55,7 @@ export default class CharDetails extends Component {
                 console.error(error);
                 this.setState({error: true})
             })
-        //this.foo.bar=0;   // error
+
     }
 
     render() {
@@ -59,28 +73,18 @@ export default class CharDetails extends Component {
             )
         }
 
-        const { name, gender, born, died, culture } = this.state.char;
+        const { char } = this.state;
+        const { name } = char;
 
         return (
             <div className="char-details rounded">
                 <h4>{name}</h4>
                 <ListGroup flush>
-                    <ListGroupItem className="d-flex justify-content-between">
-                        <span className="term">Gender</span>
-                        <span>{gender}</span>
-                    </ListGroupItem>
-                    <ListGroupItem className="d-flex justify-content-between">
-                        <span className="term">Born</span>
-                        <span>{born}</span>
-                    </ListGroupItem>
-                    <ListGroupItem className="d-flex justify-content-between">
-                        <span className="term">Died</span>
-                        <span>{died}</span>
-                    </ListGroupItem>
-                    <ListGroupItem className="d-flex justify-content-between">
-                        <span className="term">Culture</span>
-                        <span>{culture}</span>
-                    </ListGroupItem>
+                    {
+                        React.Children.map(this.props.children, (child) => {
+                            return React.cloneElement(child, {char})   
+                        })
+                    }
                 </ListGroup>
             </div>
         );

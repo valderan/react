@@ -4,10 +4,13 @@ import Header from '../header';
 import RandomChar from '../randomChar';
 import ErrorMessage from '../errorMessage/errorMessage';
 import CharacterPage from '../characterPage/characterPage';
-//import GotService from '../../services/gotService';
+import gotService from '../../services/gotService';
+import DefaultPage from '../defaultPage';
 
 
 export default class App extends React.Component {
+
+    gotService = new gotService();   // for test
 
     state = {
         visibleRandomCharBlock: true,
@@ -33,6 +36,22 @@ export default class App extends React.Component {
         const { visibleRandomCharBlock } = this.state
         const rcBtnName = visibleRandomCharBlock ? 'Скрыть блок' : 'Показать блок';
         
+        const itemList = {
+            getData: this.gotService.getAllCharacters,
+            renderItem: ({name, gender}) => `${name} (${gender})`
+        }
+
+        const itemDetails = {
+            getItem: this.gotService.getCharacter,
+            selectMessage: "Please select a character",
+            fields: [
+                {field: 'gender' , label: 'Gender'},
+                {field: 'born' , label: 'Born'},
+                {field: 'died' , label: 'Died'},
+                {field: 'culture' , label: 'Culture'}
+            ]
+        }
+
         return (
             <> 
                 <Container>
@@ -41,11 +60,15 @@ export default class App extends React.Component {
                 <Container>
                     <Row>
                         <Col lg={{size: 5, offset: 0}}>
-                        <Button onClick={this.toggle} color="primary">{rcBtnName}</Button>{' '}
-                            {visibleRandomCharBlock ? <RandomChar/> : ''}
+                            <Button onClick={this.toggle} color="primary">{rcBtnName}</Button>{' '}
+                                {visibleRandomCharBlock ? <RandomChar/> : ''}
                         </Col>
                     </Row>
-                    <CharacterPage /> 
+                    { 
+                        // <CharacterPage /> 
+                    } 
+
+                    <DefaultPage  items={itemList} item={itemDetails}/>
                 </Container>
             </>
         );

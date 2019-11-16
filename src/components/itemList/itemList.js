@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import './itemList.css';
-import gotService from '../../services/gotService';
+
 import { ListGroup, ListGroupItem } from 'reactstrap';
 import Spiner from '../spiner/spiner';
 import ErrorMessage from '../errorMessage/errorMessage';
 export default class ItemList extends Component {
 
-    gotService = new gotService();
+    
     state = {
-        charList: null,
+        itemList: null,
         error: false
     }
 
@@ -17,9 +17,11 @@ export default class ItemList extends Component {
     }
 
     componentDidMount() {
-        this.gotService.getAllCharacters()
-            .then( charList => {
-                this.setState({charList})
+        const { getData } = this.props;
+
+        getData()
+            .then( itemList => {
+                this.setState({itemList})
             })
             .catch(error => {
                 console.error(error);
@@ -28,12 +30,15 @@ export default class ItemList extends Component {
     }
 
     renderItems = (arr) => {
-        return arr.map( (item, i) => {
+        return arr.map( (item) => {
+            const label = this.props.renderItem(item);
             return (
                 <ListGroupItem 
-                    key={i}
+                    key={item.id}
                     className="list-group-item"
-                    onClick={ () => this.props.onCharSelected(item.id)}>{item.name}</ListGroupItem>
+                    onClick={ () => this.props.onItemSelected(item.id)}>
+                    {label}
+                </ListGroupItem>
             )
         })
     }
@@ -44,13 +49,13 @@ export default class ItemList extends Component {
             return <ErrorMessage errorNumber={-1} errorText=''/>
         }
         
-        const { charList } = this.state;
+        const { itemList } = this.state;
 
-        if (!charList) {
+        if (!itemList) {
             return  <Spiner />
         }
 
-        const items = this.renderItems(charList);
+        const items = this.renderItems(itemList);
 
         return (
             <div className="char-details rounded">
