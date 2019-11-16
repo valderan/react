@@ -2,7 +2,6 @@ import React from 'react';
 import ItemList from '../itemList';
 import ItemDetails, { Field } from '../itemDetails';
 import ErrorMessage from '../errorMessage/errorMessage';
-import gotService from '../../services/gotService';
 import RowBlock from '../rowBlock/rowBlock';
 import './defaultPage.css';
 
@@ -10,7 +9,7 @@ import './defaultPage.css';
 export default class DefaultPage extends React.Component {
 
     state = {
-        selectedItem: this.props.selectedItem ? this.props.selectedItem : 130,
+        selectedItem: this.props.selectedItem ? this.props.selectedItem : 0,
         error: false,
     }
 
@@ -40,17 +39,16 @@ export default class DefaultPage extends React.Component {
 
         const itemFields = [];
         item.fields.forEach( ({ field, label }, index) => {
-            
             itemFields.push(<Field field={field} key={index} label={label} />)
-             
         })
-            
+
+
         const itemDetails = (
             <ItemDetails 
                 itemId = {this.state.selectedItem}
                 getItem = { item.getItem }
                 selectMessage={ item.selectMessage }>
-                { itemFields }
+                    {itemFields}
             </ItemDetails>
         )
 

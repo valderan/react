@@ -14,7 +14,7 @@ const Field = ( { item, field, label } ) => {
 }
 
 export {
-    Field
+    Field,
 };
 
 // props:

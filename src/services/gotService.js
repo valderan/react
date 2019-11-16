@@ -3,10 +3,15 @@ export default class GotService {
         this._apiBase = 'https://www.anapioficeandfire.com/api';
     }
     
-    getResource = async (url) => {
-        const res = await fetch(`${this._apiBase}${url}`);
+
+    _getResource = async (url) => {
+        const res = await fetch(url);
         if (!res.ok) throw new Error(`Could not fetch ${url}, status: ${res.status}`);
         return await res.json();
+    }
+    
+    getResource = (url) => {
+            return this._getResource(`${this._apiBase}${url}`)
     }
 
     // получение всех героев
@@ -36,17 +41,20 @@ export default class GotService {
     // получение списка всех домов
     getAllHouses = async () => {
         const res = await this.getResource(`/houses`);
-        return res.map(this._transformHouse);
+        const overlord = await this.getOverlord(res.overlord);
+        
+        return await res.map(this._transformHouse, overlord);
     }
 
     // получение дома по номеру
     getHouse = async (id) => {
         const res = await this.getResource(`/houses/${id}`);
-        return this._transformHouse(res);
+        const overlord = await this.getOverlord(res.overlord);
+        return await this._transformHouse(res, overlord);
     }
 
-    static _valid = (str) => {
-        return str.trim(' ').length !== 0 ? str : 'no data';
+    static _valid = (str = '') => {
+        return str.length !== 0 ? str : 'no data';
     }
 
     _transformCharacter(char) {
@@ -60,22 +68,35 @@ export default class GotService {
         }
     }
 
-    _transformHouse(house) {
+
+    getOverlord = async (url = '') => {
+        let overlord = 'no data';
+        if (url.length > 0) {
+            const overlordData = await this._getResource(url);
+            overlord = overlordData.name;
+        }
+        return overlord
+    } 
+
+     _transformHouse = (house, overlord) => {
+ 
         return {
-            name: house.name,
-            region: house.region,
-            words: house.words,
-            overlord: house.overlord,
+            id: house.url.replace(/https:\/\/www.anapioficeandfire.com\/api\/houses\//,''),
+            name: GotService._valid(house.name),
+            region: GotService._valid(house.region),
+            words: GotService._valid(house.words),
+            overlord: overlord,
             ancestralWeapons: house.ancestralWeapons
         }
     }
 
     _transformBook(book) {
         return {
-            name: book.name,
-            number: book.number,
-            publisher: book.publisher,
-            released: book.released 
+            id: book.url.replace(/https:\/\/www.anapioficeandfire.com\/api\/books\//,''),
+            name: GotService._valid(book.name),
+            numberOfpages: GotService._valid(book.numberOfPages),
+            publisher: GotService._valid(book.publisher),
+            released: GotService._valid(book.released) 
         }
     }
 }

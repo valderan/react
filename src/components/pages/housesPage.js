@@ -7,7 +7,7 @@ import DefaultPage from '../defaultPage';
 import RandomItem from '../randomItem';
 
 
-export default class Books extends React.Component {
+export default class Houses extends React.Component {
 
     gotService = new gotService();   // for test
 
@@ -36,21 +36,21 @@ export default class Books extends React.Component {
         const rcBtnName = visibleRandomBlock ? 'Скрыть блок' : 'Показать блок';
           
         const itemList = {
-            getData: this.gotService.getBooks,
-            renderItem: ({id, name, publisher}) => `${id}. ${name} (${publisher})`
+            getData: this.gotService.getAllHouses,
+            renderItem: ({ name, region }) => `${name} (${region})`
         }
   
         const itemFields = [
-            {field: 'name' , label: 'Book'},
-            {field: 'numberOfpages' , label: 'Pages'},
-            {field: 'publisher' , label: 'Publisher'},
-            {field: 'released' , label: 'Released'}
+            {field: 'name' , label: 'House'},
+            {field: 'region' , label: 'region'},
+            {field: 'overlord' , label: 'Overlord'},
+            {field: 'words' , label: 'words'}
         ]
 
         const itemDetails = {
-            getItem: this.gotService.getBook,
-            selectMessage: "<-- Выберите, пожалуйста, книгу из списка",
-            itemType: 'Book',
+            getItem: this.gotService.getHouse,
+            selectMessage: "<-- Выберите, пожалуйста, дом из списка",
+            itemType: 'House',
             fields: itemFields
         }
 

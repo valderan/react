@@ -1,11 +1,10 @@
 import React from 'react';
 import {Col, Row, Container, Button} from 'reactstrap';
 import Header from '../header';
-import RandomChar from '../randomChar';
 import ErrorMessage from '../errorMessage/errorMessage';
-import CharacterPage from '../characterPage/characterPage';
 import gotService from '../../services/gotService';
 import DefaultPage from '../defaultPage';
+import RandomItem from '../randomItem';
 
 
 export default class App extends React.Component {
@@ -13,8 +12,8 @@ export default class App extends React.Component {
     gotService = new gotService();   // for test
 
     state = {
-        visibleRandomCharBlock: true,
-        selectedChar: 130,
+        visibleRandomBlock: true,
+        selectedItem: 0,
         error: false
     }
 
@@ -23,7 +22,7 @@ export default class App extends React.Component {
     }
 
     toggle = () => {
-        this.setState({visibleRandomCharBlock: !this.state.visibleRandomCharBlock})
+        this.setState({visibleRandomBlock: !this.state.visibleRandomBlock})
     } 
 
    
@@ -33,23 +32,26 @@ export default class App extends React.Component {
             return <ErrorMessage errorNumber={-1} errorText=''/>
         }
 
-        const { visibleRandomCharBlock } = this.state
-        const rcBtnName = visibleRandomCharBlock ? 'Скрыть блок' : 'Показать блок';
-        
+        const { visibleRandomBlock, selectedItem } = this.state
+        const rcBtnName = visibleRandomBlock ? 'Скрыть блок' : 'Показать блок';
+          
         const itemList = {
             getData: this.gotService.getAllCharacters,
             renderItem: ({name, gender}) => `${name} (${gender})`
         }
+  
+        const charFields = [
+            {field: 'gender' , label: 'Gender'},
+            {field: 'born' , label: 'Born'},
+            {field: 'died' , label: 'Died'},
+            {field: 'culture' , label: 'Culture'}
+        ]
 
         const itemDetails = {
             getItem: this.gotService.getCharacter,
-            selectMessage: "Please select a character",
-            fields: [
-                {field: 'gender' , label: 'Gender'},
-                {field: 'born' , label: 'Born'},
-                {field: 'died' , label: 'Died'},
-                {field: 'culture' , label: 'Culture'}
-            ]
+            selectMessage: "<-- Выберите, пожалуйста, персонажа из списка",
+            itemType: 'Character',
+            fields: charFields
         }
 
         return (
@@ -61,14 +63,10 @@ export default class App extends React.Component {
                     <Row>
                         <Col lg={{size: 5, offset: 0}}>
                             <Button onClick={this.toggle} color="primary">{rcBtnName}</Button>{' '}
-                                {visibleRandomCharBlock ? <RandomChar/> : ''}
+                                {visibleRandomBlock ? <RandomItem itemDetails={itemDetails} /> : ''}
                         </Col>
                     </Row>
-                    { 
-                        // <CharacterPage /> 
-                    } 
-
-                    <DefaultPage  items={itemList} item={itemDetails}/>
+                    <DefaultPage  items={itemList} item={itemDetails} selectedItem={selectedItem}/>
                 </Container>
             </>
         );
