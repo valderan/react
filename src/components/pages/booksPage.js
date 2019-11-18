@@ -1,13 +1,14 @@
 import React from 'react';
 import {Col, Row, Container, Button} from 'reactstrap';
-import Header from '../header';
+import { withRouter } from 'react-router-dom';
+
 import ErrorMessage from '../errorMessage/errorMessage';
 import gotService from '../../services/gotService';
-import DefaultPage from '../defaultPage';
 import RandomItem from '../randomItem';
+import ItemList from '../itemList';
 
 
-export default class Books extends React.Component {
+ class BooksPage extends React.Component {
 
     gotService = new gotService();   // for test
 
@@ -55,10 +56,6 @@ export default class Books extends React.Component {
         }
 
         return (
-            <> 
-                <Container>
-                    <Header />
-                </Container>
                 <Container>
                     <Row>
                         <Col lg={{size: 5, offset: 0}}>
@@ -66,9 +63,16 @@ export default class Books extends React.Component {
                                 {visibleRandomBlock ? <RandomItem itemDetails={itemDetails} randomIndex={{min:1, max:10}}/> : ''}
                         </Col>
                     </Row>
-                    <DefaultPage  items={itemList} item={itemDetails} selectedItem={selectedItem}/>
+                    <ItemList 
+                        onItemSelected={ (itemId) => {
+                            this.props.history.push(itemId);
+                        }}
+                        getData={itemList.getData}
+                        renderItem={itemList.renderItem }/>
                 </Container>
-            </>
         );
     }
 };
+
+
+export default withRouter(BooksPage);

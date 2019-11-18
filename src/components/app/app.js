@@ -1,30 +1,26 @@
 import React from 'react';
 import {Col, Row, Container, Button} from 'reactstrap';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
+import CharactersPage from '../pages/charactersPage';
+import BooksPage from '../pages/booksPage';
+import HousesPage from '../pages/housesPage';
+import BooksItem from '../pages/booksItem'
+import Slider from '../slider';
+
 import Header from '../header';
 import ErrorMessage from '../errorMessage/errorMessage';
-import gotService from '../../services/gotService';
-import DefaultPage from '../defaultPage';
-import RandomItem from '../randomItem';
-
+import './app.css';
 
 export default class App extends React.Component {
 
-    gotService = new gotService();   // for test
-
     state = {
-        visibleRandomBlock: true,
-        selectedItem: 0,
         error: false
     }
 
     componentDidCatch() {
         this.setState({error: true})
     }
-
-    toggle = () => {
-        this.setState({visibleRandomBlock: !this.state.visibleRandomBlock})
-    } 
-
    
     render() {
         
@@ -32,43 +28,29 @@ export default class App extends React.Component {
             return <ErrorMessage errorNumber={-1} errorText=''/>
         }
 
-        const { visibleRandomBlock, selectedItem } = this.state
-        const rcBtnName = visibleRandomBlock ? 'Скрыть блок' : 'Показать блок';
-          
-        const itemList = {
-            getData: this.gotService.getAllCharacters,
-            renderItem: ({name, gender}) => `${name} (${gender})`
-        }
-  
-        const charFields = [
-            {field: 'gender' , label: 'Gender'},
-            {field: 'born' , label: 'Born'},
-            {field: 'died' , label: 'Died'},
-            {field: 'culture' , label: 'Culture'}
-        ]
-
-        const itemDetails = {
-            getItem: this.gotService.getCharacter,
-            selectMessage: "<-- Выберите, пожалуйста, персонажа из списка",
-            itemType: 'Character',
-            fields: charFields
-        }
-
         return (
-            <> 
-                <Container>
-                    <Header />
-                </Container>
-                <Container>
-                    <Row>
-                        <Col lg={{size: 5, offset: 0}}>
-                            <Button onClick={this.toggle} color="primary">{rcBtnName}</Button>{' '}
-                                {visibleRandomBlock ? <RandomItem itemDetails={itemDetails} /> : ''}
-                        </Col>
-                    </Row>
-                    <DefaultPage  items={itemList} item={itemDetails} selectedItem={selectedItem}/>
-                </Container>
-            </>
+            <Router>
+                <div className='app'>
+                    <Container>
+                        <Header />
+                    </Container>
+                    <Container>
+                     <Switch>   
+                        <Route path='/' exact component={Slider} />
+                        <Route path='/characters' exact component={CharactersPage}/>
+                        <Route path ='/houses' component={HousesPage} />
+                        <Route path ='/books' exact component={BooksPage} />
+                        <Route path ='/books/:id' render={
+                            ({ match }) => {
+                                const { id } = match.params;
+                                return <BooksItem selectedItem={id}/>
+                            }
+                        } />
+                        <Route path='*' exact component={() => <ErrorMessage errorNumber={404} errorText=''/>} />
+                     </Switch>
+                     </Container>
+                </div>
+            </Router>
         );
     }
 };

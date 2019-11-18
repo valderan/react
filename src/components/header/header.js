@@ -1,11 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import {
     Navbar,
-    NavbarBrand,
     Nav,
-    NavItem,
-    NavLink} from 'reactstrap';
+    NavItem} from 'reactstrap';
 
 import './header.css';
 
@@ -14,17 +13,19 @@ const Header = () => {
      
         <Navbar expand="md" className="headerBlock">
             <div className="headerTitle">
-                <NavbarBrand href="#">Game of Thrones DB</NavbarBrand>
+                <Link to="/">
+                    Game of Thrones DB
+                </Link>
             </div>
             <Nav className="ml-auto headerLinks" navbar>
                 <NavItem>
-                    <NavLink href="#">Characters</NavLink>
+                    <Link className="nav-link" to="/characters/">Characters</Link>
                 </NavItem>
                 <NavItem>
-                    <NavLink href="#">Houses</NavLink>
+                    <Link className="nav-link" to="/houses/">Houses</Link>
                 </NavItem>
                 <NavItem>
-                    <NavLink href="#">Books</NavLink>
+                    <Link className="nav-link" to="/books/">Books</Link>
                 </NavItem>
             </Nav>
         </Navbar>

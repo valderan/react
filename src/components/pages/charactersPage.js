@@ -7,7 +7,7 @@ import DefaultPage from '../defaultPage';
 import RandomItem from '../randomItem';
 
 
-export default class Houses extends React.Component {
+export default class CharacterPage extends React.Component {
 
     gotService = new gotService();   // for test
 
@@ -36,22 +36,22 @@ export default class Houses extends React.Component {
         const rcBtnName = visibleRandomBlock ? 'Скрыть блок' : 'Показать блок';
           
         const itemList = {
-            getData: this.gotService.getAllHouses,
-            renderItem: ({ name, region }) => `${name} (${region})`
+            getData: this.gotService.getAllCharacters,
+            renderItem: ({name, gender}) => `${name} (${gender})`
         }
   
-        const itemFields = [
-            {field: 'name' , label: 'House'},
-            {field: 'region' , label: 'region'},
-            {field: 'overlord' , label: 'Overlord'},
-            {field: 'words' , label: 'words'}
+        const charFields = [
+            {field: 'gender' , label: 'Gender'},
+            {field: 'born' , label: 'Born'},
+            {field: 'died' , label: 'Died'},
+            {field: 'culture' , label: 'Culture'}
         ]
 
         const itemDetails = {
-            getItem: this.gotService.getHouse,
-            selectMessage: "<-- Выберите, пожалуйста, дом из списка",
-            itemType: 'House',
-            fields: itemFields
+            getItem: this.gotService.getCharacter,
+            selectMessage: "<-- Выберите, пожалуйста, персонажа из списка",
+            itemType: 'Character',
+            fields: charFields
         }
 
         return (
@@ -60,7 +60,7 @@ export default class Houses extends React.Component {
                     <Row>
                         <Col lg={{size: 5, offset: 0}}>
                             <Button onClick={this.toggle} color="primary">{rcBtnName}</Button>{' '}
-                                {visibleRandomBlock ? <RandomItem itemDetails={itemDetails} randomIndex={{min:1, max:10}}/> : ''}
+                                {visibleRandomBlock ? <RandomItem itemDetails={itemDetails} /> : ''}
                         </Col>
                     </Row>
                     <DefaultPage  items={itemList} item={itemDetails} selectedItem={selectedItem}/>

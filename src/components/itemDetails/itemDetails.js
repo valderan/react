@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { ListGroup, ListGroupItem } from 'reactstrap';
 import './itemDetails.css';
-import Spiner from '../spiner/spiner';
+//import Spiner from '../spiner/spiner';
 import ErrorMessage from '../errorMessage/errorMessage';
 
 const Field = ( { item, field, label } ) => {
@@ -73,7 +73,7 @@ export default class ItemDetails extends Component {
             return ( 
                 <>
                     <span className='select-error'>{textString}</span>
-                    <Spiner />
+                    {/* <Spiner /> */}
                 </>
             )
         }
