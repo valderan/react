@@ -1,6 +1,6 @@
 import React from 'react';
-import {Col, Row, Container, Button} from 'reactstrap';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Row, Container, Button } from 'reactstrap';
+import { BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
 
 import CharactersPage from '../pages/charactersPage';
 import BooksPage from '../pages/booksPage';
@@ -46,7 +46,20 @@ export default class App extends React.Component {
                                 return <BooksItem selectedItem={id}/>
                             }
                         } />
-                        <Route path='*' exact component={() => <ErrorMessage errorNumber={404} errorText=''/>} />
+                        <Route path='*' exact render={() => {
+                            return (
+                                <Container>
+                                    <Row>
+                                        <ErrorMessage errorNumber={404} errorText=''/>
+                                    </Row>
+                                    <Row>
+                                        <Link to='/'>
+                                            <Button color="primary">Back to main</Button>{' '}                             
+                                        </Link>
+                                    </Row>
+                                </Container>
+                            )
+                        }} />
                      </Switch>
                      </Container>
                 </div>

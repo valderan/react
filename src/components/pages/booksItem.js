@@ -1,6 +1,7 @@
 import React from 'react';
 import gotService from '../../services/gotService';
 import ItemDetails, { Field } from '../itemDetails';
+import ErrorMessage from '../errorMessage';
 
 export default class BooksItem extends React.Component {
 
@@ -10,7 +11,15 @@ export default class BooksItem extends React.Component {
         error: false
     }
 
+    componentDidCatch() {
+        this.setState({error: true})
+    }
+
     render() {
+
+        if (this.state.error) {
+            return <ErrorMessage errorNumber={404} errorText=''/>
+        }
         
         const itemFields = [
             {field: 'name' , label: 'Book'},
@@ -28,7 +37,7 @@ export default class BooksItem extends React.Component {
                 <ItemDetails 
                     itemId = {this.state.selectedItem}
                     getItem = { this.gotService.getBook }
-                    selectMessage={ 'Запрошенной Вами книги не существует!' }>
+                    selectMessage={ 'Ожидайте загрузки!' }>
                         {fields}
                 </ItemDetails>
         )

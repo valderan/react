@@ -33,7 +33,7 @@ import ItemList from '../itemList';
             return <ErrorMessage errorNumber={-1} errorText=''/>
         }
 
-        const { visibleRandomBlock, selectedItem } = this.state
+        const { visibleRandomBlock } = this.state
         const rcBtnName = visibleRandomBlock ? 'Скрыть блок' : 'Показать блок';
           
         const itemList = {
