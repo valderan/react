@@ -60,7 +60,7 @@ export default class CharacterPage extends React.Component {
                     <Row>
                         <Col lg={{size: 5, offset: 0}}>
                             <Button onClick={this.toggle} color="primary">{rcBtnName}</Button>{' '}
-                                {visibleRandomBlock ? <RandomItem itemDetails={itemDetails} /> : ''}
+                                {visibleRandomBlock ? <RandomItem itemDetails={itemDetails} randomIndex={{min:1, max:140}}/> : ''}
                         </Col>
                     </Row>
                     <DefaultPage  items={itemList} item={itemDetails} selectedItem={selectedItem}/>

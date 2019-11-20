@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {Component} from 'react';
 import { ListGroup, ListGroupItem } from 'reactstrap';
 import './itemDetails.css';
 //import Spiner from '../spiner/spiner';
@@ -22,85 +22,78 @@ export {
 // @getItem() - methos return Item(itemId) : getCharacter / getBook / getHouse 
 // @selectMessage - display text when item not exist
 
-function ItemDetails( { itemId, getItem, selectMessage, children } ) {
-    
-    console.log('itemId: ', itemId);
-    
-    const [ item, setItem ] = useState(false);
-    const [ error, setError] = useState(false);
-   
-    // state = {
-    //     item: null,
-    //     error: false,
-    //     textName: this.props.textName ? this.props.textName : ''
-    // }
-    
+export default class ItemDetails extends Component {
 
-    useEffect(() => {
-        console.log('up[date');
+    state = {
+        item: null,
+        error: false,
+        textName: this.props.textName ? this.props.textName : ''
+    }
+
+    componentDidMount() {
+        this.updateItem()
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.itemId !== prevProps.itemId) {
+                this.updateItem();
+        }
+    }
+
+    componentDidCatch() {
+        this.setState({error: true})
+    }
+
+    updateItem = () => {
+        const { itemId, getItem} = this.props;
         if (!itemId) {
-            
             return
         }
 
         getItem(itemId)
-            .then( data => {
-                console.log('data: ', data);
-                setItem(data)
+            .then( item => {
+                this.setState({item})
             })
             .catch(error => {
                 console.error(error);
-                setError(true);
+                this.setState({error: true})
             })
-    }, [])
+    }
 
-
-
-    // componentDidMount() {
-    //     this.updateItem()
-    // }
-
-    // componentDidUpdate(prevProps) {
-    //     if (this.props.itemId !== prevProps.itemId) {
-    //             this.updateItem();
-    //     }
-    // }
-
-    // componentDidCatch() {
-    //     this.setState({error: true})
-    // }
+    render () {
 
         // check for error
-        if (error) {
+        if (this.state.error) {
             return <ErrorMessage errorNumber={-1} errorText=''/>
         }
 
         // check for item exist
-        if (!item) {
-            const textString = selectMessage ? selectMessage : 'Plesae select item';
+        if (!this.state.item) {
+            const textString = this.props.selectMessage ? this.props.selectMessage : 'Plesae select item';
             return ( 
                 <>
                     <span className='select-error'>{textString}</span>
+                    {/* <Spiner /> */}
                 </>
             )
         }
 
-        const { name } = item;
+        const { item, textName } = this.state,
+            { name } = item;
 
         return (
             <div className="char-details rounded">
-                <h4>{name}</h4>
+                <h4>{textName + name}</h4>
                 <ListGroup flush>
                     {
-                        React.Children.map( children, (child) => {
+                        React.Children.map( this.props.children, (child) => {
                             return React.cloneElement(child, { item })
                         })
                     }
                 </ListGroup>
             </div>
         )
-    
+    }
 
 }
 
-export default ItemDetails;

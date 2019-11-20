@@ -1,82 +1,63 @@
-import React, {Component} from 'react';
+import React, { useState, useEffect } from 'react';
 import { ListGroup, ListGroupItem } from 'reactstrap';
 import ErrorMessage from '../errorMessage/errorMessage';
 import Spiner from '../spiner/spiner';
 import './randomItem.css';
 
-export default class RandomItem extends Component {
+function RandomItem({ randomIndex, itemDetails }) {
 
-    state = {
-        item: {},
-        loading: true,
-        error: false
-    }
 
-    componentDidMount() {
-        this.updateItem();
-        this.timerId = setInterval(this.updateItem, 4000);
-    }
+    const [item, setItem] = useState({});
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
 
-    componentWillUnmount() {
-        clearInterval(this.timerId);
-    }
-
-    onItemLoaded = (item) => {
-        this.setState({item, loading: false})
-    }
-
-    onError = (error) => {
-        this.setState({
-            error: true,
-            loading: false
-        });
-    }
-
-    updateItem = () => {
-        let randomIndex = Math.random() * 140 + 25;
-        if  (this.props.randomIndex) {
-            const { min, max } = this.props.randomIndex;
-            randomIndex = min + Math.random() * (max + 1 - min);
-        }
+    useEffect(() => {
+        const { min, max } = randomIndex;
+        randomIndex = min + Math.random() * (max + 1 - min);
         const id = Math.floor(randomIndex);
-        const { getItem } = this.props.itemDetails;
+        const { getItem } = itemDetails;
 
         getItem(id)
-            .then(this.onItemLoaded)
-            .catch(this.onError)
-    } 
+            .then(onItemLoaded)
+            .catch(onError)
+    }, [])
 
-    render() {
-        const { item, loading, error } = this.state,
-          { itemType, fields} = this.props.itemDetails; 
-            
-        if (error) {
-            return <ErrorMessage errorNumber={404} errorText={''} />
-        }
-
-
-        const itemFields = [];
-        fields.forEach( ({ field, label }, index) => {
-            itemFields.push(<Field item={item} key={index} field={field} label={label}/>)
-        })
-
-        const content =  (
-            <>  
-                <h4>Random {itemType}: {item.name}</h4>
-                <ListGroup flush>
-                    {itemFields}
-                </ListGroup>
-            </>
-        )
-
-        const showContent = loading ? <Spiner /> : content; 
-
-        return (
-            <div className="random-block rounded">
-                {showContent}
-            </div>
-        )
+    const onItemLoaded = (item) => {
+        setItem(item);
+        setLoading(false);
     }
+
+    const onError = (error) => {
+        setLoading(false);
+        setError(true);
+    }
+
+    
+
+    const { itemType, fields} = itemDetails; 
+        
+    if (error) {
+        return <ErrorMessage errorNumber={404} errorText={''} />
+    }
+    const itemFields = [];
+    fields.forEach( ({ field, label }, index) => {
+        itemFields.push(<Field item={item} key={index} field={field} label={label}/>)
+    })
+    const content =  (
+        <>  
+            <h4>Random {itemType}: {item.name}</h4>
+            <ListGroup flush>
+                {itemFields}
+            </ListGroup>
+        </>
+    )
+    const showContent = loading ? <Spiner /> : content; 
+    return (
+        <div className="random-block rounded">
+            {showContent}
+        </div>
+    )
+    
 
 }
 
@@ -92,3 +73,6 @@ const Field = ({item, field, label}) => {
         </>
     )
 }
+
+
+export default RandomItem;
