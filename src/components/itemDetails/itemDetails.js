@@ -32,15 +32,12 @@ function ItemDetails( { itemId, getItem, selectMessage, children } ) {
         
         if (!itemId) return
 
-        isLoad(true)
-        
-        // if (item.hasOwnProperty('id')) {
-        //     if(itemId === item.id) return;
-        // }
-        
+        isLoad(true)        
         getItem(itemId)
             .then( data => {
+                
                 console.log(data);
+                
                 isLoad(false);
                 setItem(data);
             })
@@ -48,7 +45,7 @@ function ItemDetails( { itemId, getItem, selectMessage, children } ) {
                 console.error(error);
                 setError(true);
             })
-    }, [])
+    }, item)
 
 
     // check for error
