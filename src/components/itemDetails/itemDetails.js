@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ListGroup, ListGroupItem } from 'reactstrap';
 import './itemDetails.css';
-//import Spiner from '../spiner/spiner';
+import Spiner from '../spiner/spiner';
 import ErrorMessage from '../errorMessage/errorMessage';
 
 const Field = ( { item, field, label } ) => {
@@ -23,30 +23,26 @@ export {
 // @selectMessage - display text when item not exist
 
 function ItemDetails( { itemId, getItem, selectMessage, children } ) {
-    
-    console.log('itemId: ', itemId);
-    
-    const [ item, setItem ] = useState(false);
+
+    const [ item, setItem ] = useState(null);
     const [ error, setError] = useState(false);
-   
-    // state = {
-    //     item: null,
-    //     error: false,
-    //     textName: this.props.textName ? this.props.textName : ''
-    // }
+    const [ load, isLoad ] = useState(false) 
     
-
     useEffect(() => {
-        console.log('up[date');
-        if (!itemId) {
-            
-            return
-        }
+        
+        if (!itemId) return
 
+        isLoad(true)
+        
+        // if (item.hasOwnProperty('id')) {
+        //     if(itemId === item.id) return;
+        // }
+        
         getItem(itemId)
             .then( data => {
-                console.log('data: ', data);
-                setItem(data)
+                console.log(data);
+                isLoad(false);
+                setItem(data);
             })
             .catch(error => {
                 console.error(error);
@@ -55,38 +51,31 @@ function ItemDetails( { itemId, getItem, selectMessage, children } ) {
     }, [])
 
 
+    // check for error
+    if (error) {
+        return <ErrorMessage errorNumber={-1} errorText=''/>
+    }
+    
+    // check for item exist
+    if (!item) {
+        const textString = selectMessage ? selectMessage : 'Plesae select item';
+        return ( 
+            <>
+                <span className='select-error'>{textString}</span>
+            </>
+        )
+    }
 
-    // componentDidMount() {
-    //     this.updateItem()
-    // }
+    if (load) {
+        return ( 
+            <>
+                <Spiner />
+            </>
+        )
+    }
 
-    // componentDidUpdate(prevProps) {
-    //     if (this.props.itemId !== prevProps.itemId) {
-    //             this.updateItem();
-    //     }
-    // }
-
-    // componentDidCatch() {
-    //     this.setState({error: true})
-    // }
-
-        // check for error
-        if (error) {
-            return <ErrorMessage errorNumber={-1} errorText=''/>
-        }
-
-        // check for item exist
-        if (!item) {
-            const textString = selectMessage ? selectMessage : 'Plesae select item';
-            return ( 
-                <>
-                    <span className='select-error'>{textString}</span>
-                </>
-            )
-        }
-
-        const { name } = item;
-
+    const { name } = item;
+    
         return (
             <div className="char-details rounded">
                 <h4>{name}</h4>
@@ -99,8 +88,6 @@ function ItemDetails( { itemId, getItem, selectMessage, children } ) {
                 </ListGroup>
             </div>
         )
-    
-
 }
 
 export default ItemDetails;

@@ -16,7 +16,6 @@ function RandomItem({ randomIndex, itemDetails }) {
         randomIndex = min + Math.random() * (max + 1 - min);
         const id = Math.floor(randomIndex);
         const { getItem } = itemDetails;
-
         getItem(id)
             .then(onItemLoaded)
             .catch(onError)
