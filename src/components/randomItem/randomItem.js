@@ -13,13 +13,13 @@ function RandomItem({ randomIndex, itemDetails }) {
 
     useEffect(() => {
         const { min, max } = randomIndex;
-        randomIndex = min + Math.random() * (max + 1 - min);
-        const id = Math.floor(randomIndex);
+        const index = min + Math.random() * (max + 1 - min);
+        const id = Math.floor(index);
         const { getItem } = itemDetails;
         getItem(id)
             .then(onItemLoaded)
             .catch(onError)
-    }, [])
+    }, [itemDetails, randomIndex])
 
     const onItemLoaded = (item) => {
         setItem(item);

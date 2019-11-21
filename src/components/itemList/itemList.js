@@ -19,7 +19,7 @@ function ItemList({ getData, onItemSelected, renderItem}) {
             console.error(error);
             setError(true);
         })
-    }, [])
+    }, [getData])
 
     const renderItems = (arr) => {
         return arr.map( (item) => {

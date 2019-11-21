@@ -42,7 +42,7 @@ function ItemDetails( { itemId, getItem, selectMessage, children } ) {
                 console.error(error);
                 setError(true);
             })
-    }, [itemId])
+    }, [getItem, itemId])
 
 
     // check for error
