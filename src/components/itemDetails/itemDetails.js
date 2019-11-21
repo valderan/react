@@ -26,7 +26,7 @@ function ItemDetails( { itemId, getItem, selectMessage, children } ) {
 
     const [ item, setItem ] = useState(null);
     const [ error, setError] = useState(false);
-    const [ load, isLoad ] = useState(false) 
+    const [ load, isLoad ] = useState(false);
     
     useEffect(() => {
         
@@ -34,10 +34,7 @@ function ItemDetails( { itemId, getItem, selectMessage, children } ) {
 
         isLoad(true)        
         getItem(itemId)
-            .then( data => {
-                
-                console.log(data);
-                
+            .then( data => {    
                 isLoad(false);
                 setItem(data);
             })
@@ -45,7 +42,7 @@ function ItemDetails( { itemId, getItem, selectMessage, children } ) {
                 console.error(error);
                 setError(true);
             })
-    }, item)
+    }, [itemId])
 
 
     // check for error
