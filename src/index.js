@@ -1,14 +1,44 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 
-import 'bootstrap/dist/css/bootstrap.css';
-import './index.css';
+const getText = (value = 0) => {
+    const text = document.querySelector('.number');
+    text.innerHTML = value;
+}  
 
-import App from './components/app';
-ReactDOM.render(<App />, document.getElementById('root'));
+const reducer = (state = 0, action) => {
+    switch (action.type ) {
+        case 'INC':
+            return state + 1;
+        
+        case 'DEC':
+            return state - 1;
 
-// import Books from './components/pages/booksPage'
-// ReactDOM.render(<Books />, document.getElementById('root'));
+        case 'RES':
+                return action.value;
 
-// import Houses from './components/pages/housesPage'
-// ReactDOM.render(<Houses />, document.getElementById('root'));
+        default: 
+            return state;
+        }
+}
+
+const inc = () => ({type: 'INC'});
+const dec = () => ({type: 'DEC'});
+const res = (value = 0) => ({type: 'RES', value});
+
+
+let state = 0;
+getText(state);
+
+document.getElementById('inc').addEventListener('click', () => {
+    state = reducer(state, inc())
+    getText(state);
+})
+
+document.getElementById('dec').addEventListener('click', () => {
+    state = reducer(state, dec())
+    getText(state); 
+})
+
+document.getElementById('res').addEventListener('click', () => {
+    state = reducer(state, res(0))
+    getText(state); 
+})
