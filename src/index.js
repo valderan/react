@@ -13,7 +13,7 @@ class Redux {
 
     dispatch = async (param) => {
         this.state = await this.store(this.state, param);
-        this.subscribe();
+        this.subscribeFunc();
         return this.state;
     }
 
@@ -23,7 +23,7 @@ class Redux {
     }
 
     subscribe( func ) {
-        this.subscribe = func;
+        this.subscribeFunc = func;
     }
 }
 
@@ -55,7 +55,7 @@ const inc = () => ({type: 'INC'});
 const dec = () => ({type: 'DEC'});
 const res = (value = 0) => ({type: 'RES', value});
 
-// загрузка с сервера
+// загрузка с/на сервер
 const getUrl = async (url = '/numbers', string = undefined) => {
     const baseUrl = 'http://localhost:3333';
     let res = undefined;
@@ -83,7 +83,6 @@ store.createStore(reducer)
 store.subscribe( () => {
     getText(store.getState());
 });
-
 
 // слушатели
 document.getElementById('inc').addEventListener('click', () => {
