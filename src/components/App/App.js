@@ -1,14 +1,9 @@
 import React from 'react';
 import './App.css';
 import styled from 'styled-components'
-import { createStore } from 'redux';
-import { Provider } from 'react-redux'
-import reducer from '../../store/reducers';
-
-
 
 import TodoListContainer from '../TodoList';
-import Input from '../Input';
+import InputContainer from '../Input';
 
 const Main = styled.div`
   position: absolute;
@@ -30,19 +25,15 @@ const List = styled.div`
   border-radius: 8px;
 `;
 
-const store = createStore(reducer);
 
 function App() {
   return (
-    <Provider store={store}>
       <Main>
         <List>
           <TodoListContainer />
-          <Input />
+          <InputContainer />
         </List>
-      </Main>
-    </Provider>
-    
+      </Main>    
   );
 }
 

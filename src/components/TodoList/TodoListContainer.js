@@ -2,18 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import TodoList from './TodoList';
-import { hideCompleteItems,showCompleteItems,
-        enableCompleteItem,disableCompleteItem } from '../../store/actions.js';
+import { enableCompleteItem,disableCompleteItem } from '../../store/actions.js';
 
 
-function TodoListContainer({itemList, hide, hideCompleteItems, showCompleteItems, enableCompleteItem, disableCompleteItem }) {
-
+function TodoListContainer({itemList, hide, enableCompleteItem, disableCompleteItem }) {
+    
     return (
         <TodoList 
             itemList={itemList} 
             hideAll={hide} 
-            hideCompleteItems={hideCompleteItems}
-            showCompleteItems={showCompleteItems}
             enableCompleteItem={enableCompleteItem}
             disableCompleteItem={disableCompleteItem}
             />
@@ -21,6 +18,7 @@ function TodoListContainer({itemList, hide, hideCompleteItems, showCompleteItems
 }
 
 const mapStateToProps = state => {
+
     return{
         itemList: state.items,
         hide: state.hideAll
@@ -28,8 +26,6 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-    hideCompleteItems,
-    showCompleteItems,
     enableCompleteItem,
     disableCompleteItem
 }

@@ -3,7 +3,6 @@ import { ADD_NEW_ITEM,
         SHOW_COMPLETE_ITEMS, 
         ENABLE_COMPLETE_ITEM,
         DISABLE_COMPLETE_ITEM } from './actions';
-import { stat } from 'fs';
 
 const defaultState = {
     items:[
@@ -26,9 +25,8 @@ const reducer = (state = defaultState, action) => {
     switch(action.type) {
         
         case ADD_NEW_ITEM:
-            const newState = {...state};
-            newState.items.push(action.payload);
-            return {...newState}
+            const newItems = [...state.items, action.payload ];
+            return {...state, items: newItems}
         
         case HIDE_COMPLETE_ITEMS:
             return {
@@ -42,9 +40,8 @@ const reducer = (state = defaultState, action) => {
                 hideAll: action.payload
             };
 
-        case ENABLE_COMPLETE_ITEM:
-            console.log(ENABLE_COMPLETE_ITEM);  // test 
-            const list = state.items;
+        case ENABLE_COMPLETE_ITEM: 
+            const list = [...state.items];
             list.forEach(elem => {
                 if (elem.id === action.payload.id) {
                     elem.complete = true
@@ -53,8 +50,7 @@ const reducer = (state = defaultState, action) => {
             return {...state, items: list};
 
         case DISABLE_COMPLETE_ITEM:
-            console.log(DISABLE_COMPLETE_ITEM); // test 
-            const list_ = state.items;
+            const list_ = [...state.items];
             list_.forEach(elem => {
                 if (elem.id === action.payload.id) {
                     elem.complete = false

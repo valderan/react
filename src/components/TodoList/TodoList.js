@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { runInThisContext } from 'vm';
 
 const Todo = styled.div`
     width: 100%;
@@ -35,6 +34,7 @@ const Line = styled.p`
 `;
 
 function CreatePost({item, id, forEnable, forDisable}) {
+
     if (item.complete) {
         return(
             <PostComplete key={id} onClick={() => {
@@ -54,8 +54,7 @@ function CreatePost({item, id, forEnable, forDisable}) {
     }
 }
 
-function TodoList( {itemList , hideAll, enableCompleteItem, disableCompleteItem}) {
-    console.log('itemList: ', itemList);
+function TodoList( {itemList , hideAll, enableCompleteItem, disableCompleteItem} ) {
     
     const allItems=[];
     

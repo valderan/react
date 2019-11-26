@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import uid from 'uuid/v4';
 
 const InputForm = styled.div`
     width: 100%;
@@ -59,12 +60,35 @@ const InputForm = styled.div`
     }
 `;
 
-function Input() {
+function Input({ hide, addNewItem, hideCompleteItems, showCompleteItems }) {
+
+    const [newItemText, fillItemText] = useState('');
+
+    const fillNewItem = (e) => {
+        fillItemText(e.target.value)
+    }
+
+    const createItem = () => {
+        const newItem = {
+            id: uid(),
+            item: newItemText,
+            complete: false
+        }
+        addNewItem(newItem);
+        fillItemText('');
+    }
+
     return(
         <InputForm>
-            <input type="text" placeholder="Enter a new todo item" /> 
-            <button className="btn-hide">Hide complete</button>
-            <button className="btn-new">Add new</button>
+            <input value={newItemText} type="text" placeholder="Enter a new todo item" onChange={fillNewItem}/> 
+            <button className="btn-hide" onClick={() => {
+                if (!hide) {
+                    hideCompleteItems();
+                } else {
+                    showCompleteItems();
+                }
+            }}>Hide complete</button>
+            <button className="btn-new" onClick={createItem}>Add new</button>
         </InputForm>   
     )
 }
