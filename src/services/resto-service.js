@@ -80,13 +80,6 @@ export default class RestoService {
         return await res.map( item => this._transformMenu(item, buffer.get('category')));
     }
 
-    getMenuItem = async (id) => {
-        const category = await this.getUrl('/category');
-        const buffer = new Buffer({name:'category', body:category });
-        const res = await this.getUrl('/menu/'+id);
-        return this._transformMenu(res, buffer.get('category'));
-    }
-
     static _valid = (str = '') => {
         return str.length !== 0 ? str : 'no data';
     }
