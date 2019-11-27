@@ -1,9 +1,9 @@
 import React from 'react';
-import MenuList from '../menu-list';
+import MenuListContainer from '../menu-list';
 
 const MainPage = () => {
     return (
-        <MenuList/>
+        <MenuListContainer/>
     )
 }
 

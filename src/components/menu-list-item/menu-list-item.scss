@@ -21,6 +21,10 @@
         object-fit: cover;
         margin-bottom: 20px;
     }
+    &__pic {
+        width: calc(10%);
+        margin-left: +20px;
+    }
     &__category, &__price {
         font-size: 18px;
         font-weight: 300;

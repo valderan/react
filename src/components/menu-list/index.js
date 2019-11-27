@@ -1,2 +1,2 @@
-import MenuList from './menu-list';
-export default MenuList;
+import MenuListContainer from './menu-list-container';
+export default MenuListContainer;

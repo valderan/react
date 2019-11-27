@@ -1,22 +1,26 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
-import {MainPage, CartPage} from '../pages';
+import { Route, Switch } from 'react-router-dom';
+import {MainPage, CartPage, ProductPage} from '../pages';
 import AppHeader from '../app-header';
-import WithRestoService from '../hoc';
 
 import Background from './food-bg.jpg';
 
-const App = ({RestoService}) => {
-    console.log('RestoService: ', RestoService.getMenuItems());
+const App = () => {
     return (
         <div style={{background: `url(${Background}) center center/cover no-repeat`}} className="app">
             <AppHeader total={50}/>
             <Switch>
                 <Route path='/' exact component={MainPage} />  
                 <Route path='/cart' exact component={CartPage} />
+                <Route path ='/product/:id' render={
+                            ({ match }) => {
+                                const { id } = match.params;
+                                return <ProductPage productId={id}/>
+                            }
+                } />
             </Switch>
         </div>
     )
 }
 
-export default WithRestoService()(App);
+export default App;

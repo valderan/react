@@ -10,7 +10,7 @@
 		{
 			"title": "Pizza Margherita",
 			"price": 10,
-			"url": "http://www.academiabarilla.com/anteprima_pizzamargherita_xhm1p-2_1200.jpg?h=faa3bae42d7180a508c490395249247ded3f362c",
+			"url": "https://assets.myfoodandfamily.com/adaptivemedia/rendition/206192_3000x2000.jpg?id=042b45221a1ba50714d62ae790ca6c8a57a07841&ht=650&wd=1004&clid=pim",
 			"category": "pizza",
 			"id": 2
 		},
@@ -35,5 +35,23 @@
 			"category": "meat",
 			"id": 5
 		}
+	],
+	"category": [
+		{
+			"name": "meat",
+			"url": "/img/meat.png",
+			"id": 1
+		},
+		{
+			"name": "salads",
+			"url": "/img/salad.png",
+			"id": 2
+		},
+		{
+			"name": "pizza",
+			"url": "/img/pizza.png",
+			"id": 3
+		}
 	]
+
 }
