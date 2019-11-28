@@ -1,57 +1,92 @@
 {
-	"menu": [
-		{
-			"title": "Cesar salad",
-			"price": 12,
-			"url": "https://static.1000.menu/img/content/21458/-salat-cezar-s-kr-salat-cezar-s-krevetkami-s-maionezom_1501173720_1_max.jpg",
-			"category": "salads",
-			"id": 1
-		},
-		{
-			"title": "Pizza Margherita",
-			"price": 10,
-			"url": "https://assets.myfoodandfamily.com/adaptivemedia/rendition/206192_3000x2000.jpg?id=042b45221a1ba50714d62ae790ca6c8a57a07841&ht=650&wd=1004&clid=pim",
-			"category": "pizza",
-			"id": 2
-		},
-		{
-			"title": "Pizza Napoletana",
-			"price": 13,
-			"url": "https://www.pizzanapoletana.org/struttura/pagine_bicolor/mobile/decalogo_avpn_1.jpg",
-			"category": "pizza",
-			"id": 3
-		},
-		{
-			"title": "Greece salad",
-			"price": 8,
-			"url": "https://assets.epicurious.com/photos/576454fb42e4a5ed66d1df6b/master/pass/greek-salad.jpg",
-			"category": "salads",
-			"id": 4
-		},
-		{
-			"title": "Cowboy Steak",
-			"price": 25,
-			"url": "https://i.cbc.ca/1.4491288.1516208229!/fileImage/httpImage/image.jpg_gen/derivatives/16x9_780/cowboysteak.jpg",
-			"category": "meat",
-			"id": 5
-		}
-	],
-	"category": [
-		{
-			"name": "meat",
-			"url": "/img/meat.png",
-			"id": 1
-		},
-		{
-			"name": "salads",
-			"url": "/img/salad.png",
-			"id": 2
-		},
-		{
-			"name": "pizza",
-			"url": "/img/pizza.png",
-			"id": 3
-		}
-	]
-
+  "menu": [
+    {
+      "title": "Cesar salad",
+      "price": 12,
+      "url": "https://static.1000.menu/img/content/21458/-salat-cezar-s-kr-salat-cezar-s-krevetkami-s-maionezom_1501173720_1_max.jpg",
+      "category": "salads",
+      "id": 1
+    },
+    {
+      "title": "Pizza Margherita",
+      "price": 10,
+      "url": "https://assets.myfoodandfamily.com/adaptivemedia/rendition/206192_3000x2000.jpg?id=042b45221a1ba50714d62ae790ca6c8a57a07841&ht=650&wd=1004&clid=pim",
+      "category": "pizza",
+      "id": 2
+    },
+    {
+      "title": "Pizza Napoletana",
+      "price": 13,
+      "url": "https://www.pizzanapoletana.org/struttura/pagine_bicolor/mobile/decalogo_avpn_1.jpg",
+      "category": "pizza",
+      "id": 3
+    },
+    {
+      "title": "Greece salad",
+      "price": 8,
+      "url": "https://assets.epicurious.com/photos/576454fb42e4a5ed66d1df6b/master/pass/greek-salad.jpg",
+      "category": "salads",
+      "id": 4
+    },
+    {
+      "title": "Cowboy Steak",
+      "price": 25,
+      "url": "https://i.cbc.ca/1.4491288.1516208229!/fileImage/httpImage/image.jpg_gen/derivatives/16x9_780/cowboysteak.jpg",
+      "category": "meat",
+      "id": 5
+    }
+  ],
+  "category": [
+    {
+      "name": "meat",
+      "url": "/img/meat.png",
+      "id": 1
+    },
+    {
+      "name": "salads",
+      "url": "/img/salad.png",
+      "id": 2
+    },
+    {
+      "name": "pizza",
+      "url": "/img/pizza.png",
+      "id": 3
+    }
+  ],
+  "orders": [
+    {
+      "price": 20,
+      "total": 2,
+      "body": [
+        {
+          "menuId": 2,
+          "price": 10,
+          "count": 2
+        }
+      ],
+      "id": 1
+    },
+    {
+      "price": 47,
+      "total": 4,
+      "body": [
+        {
+          "menuId": 2,
+          "price": 10,
+          "count": 1
+        },
+        {
+          "menuId": 1,
+          "price": 12,
+          "count": 2
+        },
+        {
+          "menuId": 3,
+          "price": 13,
+          "count": 1
+        }
+      ],
+      "id": 2
+    }
+  ]
 }

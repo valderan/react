@@ -8,10 +8,19 @@ class Buffer {
         }
     }
 
+    // Проверка наличия ячейки буфера 
+    // @nameBuffer - имя буфера для проверки
+    // return - число (кол-во) ячеек буфера с данным именем (должен быть 1, если больше - беда) 
     ifExist(nameBuffer) {
         return this.buffer.filter(elem => elem.name === nameBuffer).length
     }
 
+    // Создание ячейки буфера
+    // @nameBuffer - имя ячейки буфера 
+    // @bodyBuffer - тело буфера 
+    // @rewriting = ( true | false )    true - при наличии ячейки с именем @nameBuffer - она перезаписывается, 
+    //                                  false - не перезаписывается и return false
+    // return - (false | true) - неудачная | удачная попытка содать ячейку буфера
     create(nameBuffer, bodyBuffer, rewriting = true) {
         
         if (!rewriting) {
@@ -30,6 +39,9 @@ class Buffer {
         return this.ifExist(nameBuffer) > 0 ? true : false; 
     }
 
+    // Возврат тела ячейки буфера 
+    // @nameBuffer - имя ячейки буфера 
+    // return - @nameBuffer.body | false - если ячейка отсутсвует
     get(nameBuffer) {
         if (this.ifExist(nameBuffer) > 0) {
             return this.buffer.filter(elem => elem.name === nameBuffer)[0].body
@@ -38,6 +50,8 @@ class Buffer {
         return false;
     }
 
+    // Очистка ячейки буфера 
+    // @nameBuffer - имя ячейки буфера для очистки
     clear(nameBuffer) {
             this.buffer = this.buffer.filter(elem => elem.name !== nameBuffer);
         
@@ -78,6 +92,10 @@ export default class RestoService {
         const buffer = new Buffer({name:'category', body:category });
         const res = await this.getUrl(menu);
         return await res.map( item => this._transformMenu(item, buffer.get('category')));
+    }
+
+    uploadOrder = async ( body, url = '/orders') => {
+        return await this.getUrl(url, body);
     }
 
     static _valid = (str = '') => {
